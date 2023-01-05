@@ -7,7 +7,7 @@
  *
  * @author Osku and contributors
  *
- * @copyright Jean-Crhistian Denis
+ * @copyright Jean-Christian Denis
  * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 declare(strict_types=1);
@@ -29,10 +29,10 @@ use text;
 class Manage
 {
     private static $active_headers = false;
-    private static $mail_to  = '';
-    private static $mail_subject  = '';
-    private static $mail_content  = '';
-    protected static $init = false;
+    private static $mail_to        = '';
+    private static $mail_subject   = '';
+    private static $mail_content   = '';
+    protected static $init         = false;
 
     public static function init(): bool
     {
@@ -91,13 +91,21 @@ class Manage
                 dcCore::app()->error->add($e->getMessage());
             }
         }
+
         return null;
     }
 
     public static function render(): void
     {
-        echo '<html><head><title>' . __('Mail test') . '</title></head><body>' .
-        dcPage::breadcrumb([__('System') => '', __('Mail test') => '']) .
+        echo
+        '<html><head><title>' .
+        dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name') .
+        '</title></head><body>' .
+
+        dcPage::breadcrumb([
+            __('System')                                                        => '',
+            dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name') => '',
+        ]) .
         dcPage::notices() . '
 
         <div id="mail_testor">
@@ -127,7 +135,7 @@ class Manage
         dcCore::app()->formNonce() . '</p>' .
         '</form>
         </div>
-        </body>
-        </html>';
+
+        </body></html>';
     }
 }

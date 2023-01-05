@@ -1,4 +1,15 @@
 <?php
+/**
+ * @brief testMail, a plugin for Dotclear 2
+ *
+ * @package Dotclear
+ * @subpackage Plugin
+ *
+ * @author Osku and contributors
+ *
+ * @copyright Jean-Christian Denis
+ * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
+ */
 declare(strict_types=1);
 
 namespace Dotclear\Plugin\testMail;
@@ -10,13 +21,11 @@ use dcPage;
 
 class Admin
 {
-    private static $name = '';
     protected static $init = false;
 
     public static function init(): bool
     {
         if (defined('DC_CONTEXT_ADMIN')) {
-            self::$name = __('Mail test');
             self::$init = true;
         }
 
@@ -29,8 +38,8 @@ class Admin
             return false;
         }
 
-        dcCore::app()->menu[dcAdmin::MENU_SYSTEM]->addItem(
-            self::$name,
+        dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
+            dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name'),
             dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__)),
             dcPage::getPF(basename(__NAMESPACE__) . '/icon.svg'),
             preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__))) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
