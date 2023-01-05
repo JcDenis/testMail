@@ -1,22 +1,42 @@
 <?php
-/**
- * @brief testMail, a plugin for Dotclear 2
- *
- * @package Dotclear
- * @subpackage Plugin
- *
- * @author Osku and contributors
- *
- * @copyright Jean-Crhistian Denis
- * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
- */
-if (!defined('DC_CONTEXT_ADMIN')) {
-    return null;
+declare(strict_types=1);
+
+namespace Dotclear\Plugin\testMail;
+
+/* dotclear ns */
+use dcAdmin;
+use dcCore;
+use dcPage;
+
+class Admin
+{
+    private static $name = '';
+    protected static $init = false;
+
+    public static function init(): bool
+    {
+        if (defined('DC_CONTEXT_ADMIN')) {
+            self::$name = __('Mail test');
+            self::$init = true;
+        }
+
+        return self::$init;
+    }
+
+    public static function process(): ?bool
+    {
+        if (!self::$init) {
+            return false;
+        }
+
+        dcCore::app()->menu[dcAdmin::MENU_SYSTEM]->addItem(
+            self::$name,
+            dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__)),
+            dcPage::getPF(basename(__NAMESPACE__) . '/icon.svg'),
+            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__))) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
+            dcCore::app()->auth->isSuperAdmin()
+        );
+
+        return true;
+    }
 }
-dcCore::app()->menu[dcAdmin::MENU_SYSTEM]->addItem(
-    __('Mail test'),
-    dcCore::app()->adminurl->get('admin.plugin.testMail'),
-    dcPage::getPF('testMail/icon.svg'),
-    preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.testMail')) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
-    dcCore::app()->auth->isSuperAdmin()
-);
