@@ -2,10 +2,10 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="testMail">
     <name>Mail test</name>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <author>Osku and contributors</author>
     <desc>Send a simple mail from admin</desc>
-    <file>https://github.com/JcDenis/testMail/releases/download/v0.3/plugin-testMail.zip</file>
+    <file>https://github.com/JcDenis/testMail/releases/download/v0.3.1/plugin-testMail.zip</file>
     <da:dcmin>2.24</da:dcmin>
     <da:details>https://plugins.dotaddict.org/dc2/details/testMail</da:details>
     <da:support>https://github.com/JcDenis/testMail</da:support>
