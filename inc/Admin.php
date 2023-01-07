@@ -21,11 +21,13 @@ use dcPage;
 
 class Admin
 {
+    private static $pid    = '';
     protected static $init = false;
 
     public static function init(): bool
     {
         if (defined('DC_CONTEXT_ADMIN')) {
+            self::$pid  = basename(dirname(__DIR__));
             self::$init = true;
         }
 
@@ -39,10 +41,10 @@ class Admin
         }
 
         dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
-            dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name'),
-            dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__)),
-            dcPage::getPF(basename(__NAMESPACE__) . '/icon.svg'),
-            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . basename(__NAMESPACE__))) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
+            dcCore::app()->plugins->moduleInfo(self::$pid, 'name'),
+            dcCore::app()->adminurl->get('admin.plugin.' . self::$pid),
+            dcPage::getPF(self::$pid . '/icon.svg'),
+            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . self::$pid)) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
             dcCore::app()->auth->isSuperAdmin()
         );
 

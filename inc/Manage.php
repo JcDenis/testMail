@@ -26,12 +26,16 @@ use http;
 use mail;
 use text;
 
+/* php */
+use Exception;
+
 class Manage
 {
     private static $active_headers = false;
     private static $mail_to        = '';
     private static $mail_subject   = '';
     private static $mail_content   = '';
+    private static $pid            = '';
     protected static $init         = false;
 
     public static function init(): bool
@@ -39,6 +43,7 @@ class Manage
         if (defined('DC_CONTEXT_ADMIN')) {
             dcPage::checkSuper();
 
+            self::$pid  = basename(dirname(__DIR__));
             self::$init = true;
         }
 
@@ -78,13 +83,13 @@ class Manage
 
                 $mail_subject = mail::B64Header(self::$mail_subject);
 
-                if ($active_headers) {
+                if (self::$active_headers) {
                     mail::sendMail(self::$mail_to, $mail_subject, self::$mail_content, $headers);
                 } else {
                     mail::sendMail(self::$mail_to, $mail_subject, self::$mail_content);
                 }
                 dcAdminNotices::addSuccessNotice(__('Mail successuffly sent.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . basename(__NAMESPACE__));
+                dcCore::app()->adminurl->redirect('admin.plugin.' . self::$pid);
 
                 return true;
             } catch (Exception $e) {
@@ -99,12 +104,12 @@ class Manage
     {
         echo
         '<html><head><title>' .
-        dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name') .
+        dcCore::app()->plugins->moduleInfo(self::$pid, 'name') .
         '</title></head><body>' .
 
         dcPage::breadcrumb([
-            __('System')                                                        => '',
-            dcCore::app()->plugins->moduleInfo(basename(__NAMESPACE__), 'name') => '',
+            __('System')                                           => '',
+            dcCore::app()->plugins->moduleInfo(self::$pid, 'name') => '',
         ]) .
         dcPage::notices() . '
 
@@ -121,7 +126,7 @@ class Manage
 
         <p>' . __('Content:') . '</p>
         <p class="area">' .
-        form::textarea('mail_content', 50, 7, html::escapeHTML($mail_content)) . '
+        form::textarea('mail_content', 50, 7, html::escapeHTML(self::$mail_content)) . '
         </p>
 
         <p><label class="classic" for="active_headers">' .
