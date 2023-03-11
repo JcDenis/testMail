@@ -1,3 +1,9 @@
+0.4 - 2023.03.11
+* update to Dotclear 2.26
+* use abstract plugin id and name
+* use dcPage open/close methods
+* use new Form helpers
+
 0.3.1 - 2023.01.07
 - fix previously introduced unix bug
 

@@ -14,5 +14,5 @@ l10n::$locales['Mail successuffly sent.']       = 'Mail envoyer avec succès.';
 l10n::$locales['Mailto:']                       = 'Envoyer à :';
 l10n::$locales['Subject:']                      = 'Sujet :';
 l10n::$locales['Active mail headers']           = 'Activer les entêtes de mail';
-l10n::$locales['Mail test']                     = 'Mail test';
+l10n::$locales['Mail test']                     = 'Testeur de mail';
 l10n::$locales['Send a simple mail from admin'] = 'Envoyer un simple mail depuis l\'admin';

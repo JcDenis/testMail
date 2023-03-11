@@ -3,7 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/JcDenis/testMail)](https://github.com/JcDenis/testMail/releases)
 [![Date](https://img.shields.io/github/release-date/JcDenis/testMail)](https://github.com/JcDenis/testMail/releases)
 [![Issues](https://img.shields.io/github/issues/JcDenis/testMail)](https://github.com/JcDenis/testMail/issues)
-[![Dotclear](https://img.shields.io/badge/dotclear-v2.24-blue.svg)](https://fr.dotclear.org/download)
+[![Dotclear](https://img.shields.io/badge/dotclear-v2.26-blue.svg)](https://fr.dotclear.org/download)
 [![Dotaddict](https://img.shields.io/badge/dotaddict-official-green.svg)](https://plugins.dotaddict.org/dc2/details/testMail)
 [![License](https://img.shields.io/github/license/JcDenis/testMail)](https://github.com/JcDenis/testMail/blob/master/LICENSE)
 
@@ -19,7 +19,7 @@ It helps dev to test dotclear mail system.
 **testMail** requires: 
 
   * super admin permission
-  * Dotclear 2.24
+  * Dotclear 2.26
 
 ## USAGE
 

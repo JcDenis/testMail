@@ -14,82 +14,66 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\testMail;
 
-/* dotclear ns */
-use dcAdminNotices;
 use dcCore;
+use dcNsProcess;
 use dcPage;
-
-/* clearbricks ns */
-use form;
-use html;
+use Dotclear\Helper\Html\Form\{
+    Checkbox,
+    Div,
+    Form,
+    Input,
+    Label,
+    Para,
+    Submit,
+    Textarea
+};
+use Exception;
 use http;
 use mail;
 use text;
 
-/* php */
-use Exception;
-
-class Manage
+class Manage extends dcNsProcess
 {
-    private static $active_headers = false;
-    private static $mail_to        = '';
-    private static $mail_subject   = '';
-    private static $mail_content   = '';
-    private static $pid            = '';
-    protected static $init         = false;
-
     public static function init(): bool
     {
         if (defined('DC_CONTEXT_ADMIN')) {
             dcPage::checkSuper();
-
-            self::$pid  = basename(dirname(__DIR__));
             self::$init = true;
         }
 
         return self::$init;
     }
 
-    public static function process(): ?bool
+    public static function process(): bool
     {
         if (!self::$init) {
             return false;
         }
-        $headers = [
-            'From: ' . mail::B64Header(dcCore::app()->blog->name) .
-            '<no-reply@' . str_replace('http://', '', http::getHost()) . ' >',
-            'Content-Type: text/HTML; charset=UTF-8;' .
-            'X-Originating-IP: ' . http::realIP(),
-            'X-Mailer: Dotclear',
-            'X-Blog-Id: ' . mail::B64Header(dcCore::app()->blog->id),
-            'X-Blog-Name: ' . mail::B64Header(dcCore::app()->blog->name),
-            'X-Blog-Url: ' . mail::B64Header(dcCore::app()->blog->url),
-        ];
 
-        self::$active_headers = !empty($_POST['active_headers']);
-        self::$mail_to        = $_POST['mail_to']      ?? '';
-        self::$mail_subject   = $_POST['mail_subject'] ?? '';
-        self::$mail_content   = $_POST['mail_content'] ?? '';
+        $active_headers = !empty($_POST['active_headers']);
+        $mail_to        = $_POST['mail_to']      ?? '';
+        $mail_subject   = $_POST['mail_subject'] ?? '';
+        $mail_content   = $_POST['mail_content'] ?? '';
 
-        if (!empty(self::$mail_content) || !empty(self::$mail_to)) {
+        if (!empty($mail_content) || !empty($mail_to)) {
             try {
-                if (!text::isEmail(self::$mail_to)) {
+                if (!text::isEmail($mail_to)) {
                     throw new Exception(__('You must provide a valid email address.'));
                 }
 
-                if (self::$mail_content == '') {
+                if ($mail_content == '') {
                     throw new Exception(__('You must provide a content.'));
                 }
 
-                $mail_subject = mail::B64Header(self::$mail_subject);
+                $mail_subject = mail::B64Header($mail_subject);
 
-                if (self::$active_headers) {
-                    mail::sendMail(self::$mail_to, $mail_subject, self::$mail_content, $headers);
+                if ($active_headers) {
+                    mail::sendMail($mail_to, $mail_subject, $mail_content, self::getHeaders());
                 } else {
-                    mail::sendMail(self::$mail_to, $mail_subject, self::$mail_content);
+                    mail::sendMail($mail_to, $mail_subject, $mail_content);
                 }
-                dcAdminNotices::addSuccessNotice(__('Mail successuffly sent.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . self::$pid);
+                dcPage::addSuccessNotice(__('Mail successuffly sent.'));
+                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
 
                 return true;
             } catch (Exception $e) {
@@ -97,50 +81,59 @@ class Manage
             }
         }
 
-        return null;
+        return true;
     }
 
     public static function render(): void
     {
+        dcpage::openModule(My::name());
+
         echo
-        '<html><head><title>' .
-        dcCore::app()->plugins->moduleInfo(self::$pid, 'name') .
-        '</title></head><body>' .
-
         dcPage::breadcrumb([
-            __('System')                                           => '',
-            dcCore::app()->plugins->moduleInfo(self::$pid, 'name') => '',
+            __('System') => '',
+            My::name()   => '',
         ]) .
-        dcPage::notices() . '
+        dcPage::notices() .
 
-        <div id="mail_testor">
-        <form method="post" action="' . dcCore::app()->admin->getPageURL() . '">
+        (new Div('mail_testor'))->items([
+            (new Form('mail_form'))->method('post')->action(dcCore::app()->admin->getPageURL())->fields([
+                (new Para())->items([
+                    (new Label(__('Mailto:')))->for('mail_to'),
+                    (new Input('mail_to'))->class('maximal')->size(30)->maxlenght(255)->value(''),
+                ]),
+                (new Para())->items([
+                    (new Label(__('Subject:')))->for('mail_subject'),
+                    (new Input('mail_subject'))->class('maximal')->size(30)->maxlenght(255)->value(''),
+                ]),
+                (new Para())->items([
+                    (new Label(__('Content:')))->for('mail_content'),
+                    (new Textarea('mail_content', ''))->class('maximal')->cols(50)->rows(7),
+                ]),
+                (new Para())->items([
+                    (new Checkbox('active_headers', false))->value(1),
+                    (new Label(__('Active mail headers')))->for('active_headers')->class('classic'),
+                ]),
+                (new Para())->items([
+                    (new Submit('save'))->accesskey('s')->value(__('Send')),
+                    dcCore::app()->formNonce(false),
+                ]),
+            ]),
+        ])->render();
 
-        <p><label for="mail_to">' . __('Mailto:') . ' ' .
-        form::field('mail_to', 30, 255, self::$mail_to, 'maximal') .
-        '</label></p>
+        dcPage::closeModule();
+    }
 
-        <p><label for="mail_subject">' . __('Subject:') . ' ' .
-        form::field('mail_subject', 30, 255, self::$mail_subject, 'maximal') .
-        '</label></p>
-
-        <p>' . __('Content:') . '</p>
-        <p class="area">' .
-        form::textarea('mail_content', 50, 7, html::escapeHTML(self::$mail_content)) . '
-        </p>
-
-        <p><label class="classic" for="active_headers">' .
-        form::checkbox('active_headers', 1, self::$active_headers) . ' ' .
-        __('Active mail headers') .
-        '</label></p>
-
-        <p class="border-top">' .
-        '<input type="submit" value="' . __('Save') . ' (s)" accesskey="s" name="save" /> ' .
-
-        dcCore::app()->formNonce() . '</p>' .
-        '</form>
-        </div>
-
-        </body></html>';
+    private static function getHeaders(): array
+    {
+        return [
+            'From: ' . mail::B64Header(dcCore::app()->blog->name) .
+            '<no-reply@' . str_replace('http://', '', http::getHost()) . ' >',
+            'Content-Type: text/HTML; charset=UTF-8;' .
+            'X-Originating-IP: ' . http::realIP(),
+            'X-Mailer: ' . My::X_MAILER,
+            'X-Blog-Id: ' . mail::B64Header(dcCore::app()->blog->id),
+            'X-Blog-Name: ' . mail::B64Header(dcCore::app()->blog->name),
+            'X-Blog-Url: ' . mail::B64Header(dcCore::app()->blog->url),
+        ];
     }
 }

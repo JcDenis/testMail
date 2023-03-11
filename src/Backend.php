@@ -17,34 +17,32 @@ namespace Dotclear\Plugin\testMail;
 /* dotclear ns */
 use dcAdmin;
 use dcCore;
+use dcNsProcess;
 use dcPage;
 
-class Admin
+class Backend extends dcNsProcess
 {
-    private static $pid    = '';
-    protected static $init = false;
-
     public static function init(): bool
     {
         if (defined('DC_CONTEXT_ADMIN')) {
-            self::$pid  = basename(dirname(__DIR__));
+            dcPage::checkSuper();
             self::$init = true;
         }
 
         return self::$init;
     }
 
-    public static function process(): ?bool
+    public static function process(): bool
     {
         if (!self::$init) {
             return false;
         }
 
         dcCore::app()->menu[dcAdmin::MENU_PLUGINS]->addItem(
-            dcCore::app()->plugins->moduleInfo(self::$pid, 'name'),
-            dcCore::app()->adminurl->get('admin.plugin.' . self::$pid),
-            dcPage::getPF(self::$pid . '/icon.svg'),
-            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . self::$pid)) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
+            My::name(),
+            dcCore::app()->adminurl->get('admin.plugin.' . My::id()),
+            dcPage::getPF(My::id() . '/icon.svg'),
+            preg_match('/' . preg_quote(dcCore::app()->adminurl->get('admin.plugin.' . My::id())) . '(&.*)?$/', $_SERVER['REQUEST_URI']),
             dcCore::app()->auth->isSuperAdmin()
         );
 
