@@ -1,3 +1,7 @@
+0.4.1 - 2023.03.21
+* fix init check
+* use new Mail Helper
+
 0.4 - 2023.03.11
 * update to Dotclear 2.26
 * use abstract plugin id and name
