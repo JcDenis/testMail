@@ -27,9 +27,9 @@ use Dotclear\Helper\Html\Form\{
     Submit,
     Textarea
 };
+use Dotclear\Helper\Network\Mail\Mail;
 use Exception;
 use http;
-use mail;
 use text;
 
 class Manage extends dcNsProcess
@@ -62,12 +62,12 @@ class Manage extends dcNsProcess
                     throw new Exception(__('You must provide a content.'));
                 }
 
-                $mail_subject = mail::B64Header($mail_subject);
+                $mail_subject = Mail::B64Header($mail_subject);
 
                 if ($active_headers) {
-                    mail::sendMail($mail_to, $mail_subject, $mail_content, self::getHeaders());
+                    Mail::sendMail($mail_to, $mail_subject, $mail_content, self::getHeaders());
                 } else {
-                    mail::sendMail($mail_to, $mail_subject, $mail_content);
+                    Mail::sendMail($mail_to, $mail_subject, $mail_content);
                 }
                 dcPage::addSuccessNotice(__('Mail successuffly sent.'));
                 dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
@@ -127,14 +127,14 @@ class Manage extends dcNsProcess
     private static function getHeaders(): array
     {
         return [
-            'From: ' . mail::B64Header(dcCore::app()->blog->name) .
+            'From: ' . Mail::B64Header(dcCore::app()->blog->name) .
             '<no-reply@' . str_replace('http://', '', http::getHost()) . ' >',
             'Content-Type: text/HTML; charset=UTF-8;' .
             'X-Originating-IP: ' . http::realIP(),
             'X-Mailer: ' . My::X_MAILER,
-            'X-Blog-Id: ' . mail::B64Header(dcCore::app()->blog->id),
-            'X-Blog-Name: ' . mail::B64Header(dcCore::app()->blog->name),
-            'X-Blog-Url: ' . mail::B64Header(dcCore::app()->blog->url),
+            'X-Blog-Id: ' . Mail::B64Header(dcCore::app()->blog->id),
+            'X-Blog-Name: ' . Mail::B64Header(dcCore::app()->blog->name),
+            'X-Blog-Url: ' . Mail::B64Header(dcCore::app()->blog->url),
         ];
     }
 }
