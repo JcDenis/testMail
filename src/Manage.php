@@ -27,10 +27,10 @@ use Dotclear\Helper\Html\Form\{
     Submit,
     Textarea
 };
+use Dotclear\Helper\Network\Http;
 use Dotclear\Helper\Network\Mail\Mail;
+use Dotclear\Helper\Text;
 use Exception;
-use http;
-use text;
 
 class Manage extends dcNsProcess
 {
@@ -54,7 +54,7 @@ class Manage extends dcNsProcess
 
         if (!empty($mail_content) || !empty($mail_to)) {
             try {
-                if (!text::isEmail($mail_to)) {
+                if (!Text::isEmail($mail_to)) {
                     throw new Exception(__('You must provide a valid email address.'));
                 }
 
@@ -128,9 +128,9 @@ class Manage extends dcNsProcess
     {
         return [
             'From: ' . Mail::B64Header(dcCore::app()->blog->name) .
-            '<no-reply@' . str_replace('http://', '', http::getHost()) . ' >',
+            '<no-reply@' . str_replace('http://', '', Http::getHost()) . ' >',
             'Content-Type: text/HTML; charset=UTF-8;' .
-            'X-Originating-IP: ' . http::realIP(),
+            'X-Originating-IP: ' . Http::realIP(),
             'X-Mailer: ' . My::X_MAILER,
             'X-Blog-Id: ' . Mail::B64Header(dcCore::app()->blog->id),
             'X-Blog-Name: ' . Mail::B64Header(dcCore::app()->blog->name),
