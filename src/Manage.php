@@ -36,7 +36,9 @@ class Manage extends dcNsProcess
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN') && dcCore::app()->auth->isSuperAdmin();
+        static::$init = defined('DC_CONTEXT_ADMIN')
+            && !is_null(dcCore::app()->auth)
+            && dcCore::app()->auth->isSuperAdmin();
 
         return static::$init;
     }
@@ -44,6 +46,11 @@ class Manage extends dcNsProcess
     public static function process(): bool
     {
         if (!static::$init) {
+            return false;
+        }
+
+        // nullsafe
+        if (is_null(dcCore::app()->adminurl)) {
             return false;
         }
 
@@ -126,6 +133,11 @@ class Manage extends dcNsProcess
 
     private static function getHeaders(): array
     {
+        // nullsafe
+        if (is_null(dcCore::app()->blog)) {
+            return [];
+        }
+
         return [
             'From: ' . Mail::B64Header(dcCore::app()->blog->name) .
             '<no-reply@' . str_replace('http://', '', Http::getHost()) . ' >',
