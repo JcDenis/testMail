@@ -1,4 +1,11 @@
+0.4.2 - 2023.04.23
+* require to Dotclear 2.26
+* use latest dotclear namespace
+* remove magic
+* fix nullsafe warnings
+
 0.4.1 - 2023.03.21
+* require to Dotclear 2.26
 * fix init check
 * use new Mail Helper
 

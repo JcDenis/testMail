@@ -20,7 +20,7 @@ $this->registerModule(
     'Mail test',
     'Send a simple mail from admin',
     'Osku and contributors',
-    '0.4.1',
+    '0.4.2',
     [
         'requires'    => [['core', '2.26']],
         'permissions' => null,
