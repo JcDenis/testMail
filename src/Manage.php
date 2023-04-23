@@ -103,30 +103,59 @@ class Manage extends dcNsProcess
         ]) .
         dcPage::notices() .
 
-        (new Div('mail_testor'))->items([
-            (new Form('mail_form'))->method('post')->action(dcCore::app()->admin->getPageURL())->fields([
-                (new Para())->items([
-                    (new Label(__('Mailto:')))->for('mail_to'),
-                    (new Input('mail_to'))->class('maximal')->size(30)->maxlenght(255)->value(''),
-                ]),
-                (new Para())->items([
-                    (new Label(__('Subject:')))->for('mail_subject'),
-                    (new Input('mail_subject'))->class('maximal')->size(30)->maxlenght(255)->value(''),
-                ]),
-                (new Para())->items([
-                    (new Label(__('Content:')))->for('mail_content'),
-                    (new Textarea('mail_content', ''))->class('maximal')->cols(50)->rows(7),
-                ]),
-                (new Para())->items([
-                    (new Checkbox('active_headers', false))->value(1),
-                    (new Label(__('Active mail headers')))->for('active_headers')->class('classic'),
-                ]),
-                (new Para())->items([
-                    (new Submit('save'))->accesskey('s')->value(__('Send')),
-                    dcCore::app()->formNonce(false),
-                ]),
-            ]),
-        ])->render();
+        (new Div('mail_testor'))
+            ->__call('items', [[
+                (new Form('mail_form'))
+                    ->__call('method', ['post'])
+                    ->__call('action', [dcCore::app()->admin->getPageURL()])
+                    ->__call('fields', [[
+                        (new Para())
+                            ->__call('items', [[
+                                (new Label(__('Mailto:')))
+                                    ->__call('for', ['mail_to']),
+                                (new Input('mail_to'))
+                                    ->__call('class', ['maximal'])
+                                    ->__call('size', [30])
+                                    ->__call('maxlenght', [255])
+                                    ->__call('value', ['']),
+                            ]]),
+                        (new Para())
+                            ->__call('items', [[
+                                (new Label(__('Subject:')))
+                                    ->__call('for', ['mail_subject']),
+                                (new Input('mail_subject'))
+                                    ->__call('class', ['maximal'])
+                                    ->__call('size', [30])
+                                    ->__call('maxlenght', [255])
+                                    ->__call('value', ['']),
+                            ]]),
+                        (new Para())
+                            ->__call('items', [[
+                                (new Label(__('Content:')))
+                                    ->__call('for', ['mail_content']),
+                                (new Textarea('mail_content', ''))
+                                    ->__call('class', ['maximal'])
+                                    ->__call('cols', [50])
+                                    ->__call('rows', [7]),
+                            ]]),
+                        (new Para())
+                            ->__call('items', [[
+                                (new Checkbox('active_headers', false))
+                                    ->__call('value', [1]),
+                                (new Label(__('Active mail headers')))
+                                    ->__call('for', ['active_headers'])
+                                    ->__call('class', ['classic']),
+                            ]]),
+                        (new Para())
+                            ->__call('items', [[
+                                (new Submit('save'))
+                                    ->__call('accesskey', ['s'])
+                                    ->__call('value', [__('Send')]),
+                                dcCore::app()->formNonce(false),
+                            ]]),
+                    ]]),
+            ]])
+            ->render();
 
         dcPage::closeModule();
     }
