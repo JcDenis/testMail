@@ -15,8 +15,11 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\testMail;
 
 use dcCore;
-use dcNsProcess;
-use dcPage;
+use Dotclear\Core\Backend\{
+    Notices,
+    Page
+};
+use Dotclear\Core\Process;
 use Dotclear\Helper\Html\Form\{
     Checkbox,
     Div,
@@ -32,25 +35,16 @@ use Dotclear\Helper\Network\Mail\Mail;
 use Dotclear\Helper\Text;
 use Exception;
 
-class Manage extends dcNsProcess
+class Manage extends Process
 {
     public static function init(): bool
     {
-        static::$init = defined('DC_CONTEXT_ADMIN')
-            && !is_null(dcCore::app()->auth)
-            && dcCore::app()->auth->isSuperAdmin();
-
-        return static::$init;
+        return self::status(My::checkContext(My::MANAGE));
     }
 
     public static function process(): bool
     {
-        if (!static::$init) {
-            return false;
-        }
-
-        // nullsafe
-        if (is_null(dcCore::app()->adminurl)) {
+        if (!self::status()) {
             return false;
         }
 
@@ -76,8 +70,8 @@ class Manage extends dcNsProcess
                 } else {
                     Mail::sendMail($mail_to, $mail_subject, $mail_content);
                 }
-                dcPage::addSuccessNotice(__('Mail successuffly sent.'));
-                dcCore::app()->adminurl->redirect('admin.plugin.' . My::id());
+                Notices::addSuccessNotice(__('Mail successuffly sent.'));
+                My::redirect();
 
                 return true;
             } catch (Exception $e) {
@@ -90,24 +84,24 @@ class Manage extends dcNsProcess
 
     public static function render(): void
     {
-        if (!static::$init) {
+        if (!self::status()) {
             return;
         }
 
-        dcpage::openModule(My::name());
+        Page::openModule(My::name());
 
         echo
-        dcPage::breadcrumb([
+        Page::breadcrumb([
             __('System') => '',
             My::name()   => '',
         ]) .
-        dcPage::notices() .
+        Notices::GetNotices() .
 
         (new Div('mail_testor'))
             ->__call('items', [[
                 (new Form('mail_form'))
                     ->__call('method', ['post'])
-                    ->__call('action', [dcCore::app()->admin->getPageURL()])
+                    ->__call('action', [My::manageUrl()])
                     ->__call('fields', [[
                         (new Para())
                             ->__call('items', [[
@@ -151,13 +145,13 @@ class Manage extends dcNsProcess
                                 (new Submit('save'))
                                     ->__call('accesskey', ['s'])
                                     ->__call('value', [__('Send')]),
-                                dcCore::app()->formNonce(false),
+                                ... My::hiddenFields(),
                             ]]),
                     ]]),
             ]])
             ->render();
 
-        dcPage::closeModule();
+        Page::closeModule();
     }
 
     private static function getHeaders(): array

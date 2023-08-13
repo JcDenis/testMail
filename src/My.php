@@ -15,38 +15,18 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\testMail;
 
 use dcCore;
+use Dotclear\Module\MyPlugin;
 
 /**
  * This module definitions.
  */
-class My
+class My extends MyPlugin
 {
     /** @var    string  Mailer name */
     public const X_MAILER = 'Dotclear';
 
-    /**
-     * This module id.
-     */
-    public static function id(): string
+    public static function checkXustomContext(int $context): ?bool
     {
-        return basename(dirname(__DIR__));
-    }
-
-    /**
-     * This module name.
-     */
-    public static function name(): string
-    {
-        $name = dcCore::app()->plugins->moduleInfo(self::id(), 'name');
-
-        return __(is_string($name) ? $name : self::id());
-    }
-
-    /**
-     * This module path.
-     */
-    public static function path(): string
-    {
-        return dirname(__DIR__);
+        return defined('DC_CONTEXT_ADMIN') && dcCore::app()->auth->isSuperAdmin();
     }
 }
