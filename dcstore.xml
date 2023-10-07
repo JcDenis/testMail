@@ -2,11 +2,11 @@
 <modules xmlns:da="http://dotaddict.org/da/">
   <module id="testMail">
     <name>Mail test</name>
-    <version>0.5</version>
+    <version>0.6</version>
     <author>Osku and contributors</author>
     <desc>Send a simple mail from admin</desc>
-    <file>https://git.dotclear.watch/JcDenis/testMail/releases/download/v0.5/plugin-testMail.zip</file>
-    <da:dcmin>2.27</da:dcmin>
+    <file>https://git.dotclear.watch/JcDenis/testMail/releases/download/v0.6/plugin-testMail.zip</file>
+    <da:dcmin>2.28</da:dcmin>
     <da:details>https://git.dotclear.watch/JcDenis/testMail/src/branch/master/README.md</da:details>
     <da:support>https://git.dotclear.watch/JcDenis/testMail/issues</da:support>
   </module>

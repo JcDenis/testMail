@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\testMail;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Core\Backend\{
     Notices,
     Page
@@ -75,7 +75,7 @@ class Manage extends Process
 
                 return true;
             } catch (Exception $e) {
-                dcCore::app()->error->add($e->getMessage());
+                App::error()->add($e->getMessage());
             }
         }
 
@@ -136,7 +136,7 @@ class Manage extends Process
                             ->__call('items', [[
                                 (new Checkbox('active_headers', false))
                                     ->__call('value', [1]),
-                                (new Label(__('Active mail headers')))
+                                (new Label(__('Active mail headers'), Label::OUTSIDE_LABEL_AFTER))
                                     ->__call('for', ['active_headers'])
                                     ->__call('class', ['classic']),
                             ]]),
@@ -156,20 +156,15 @@ class Manage extends Process
 
     private static function getHeaders(): array
     {
-        // nullsafe
-        if (is_null(dcCore::app()->blog)) {
-            return [];
-        }
-
         return [
-            'From: ' . Mail::B64Header(dcCore::app()->blog->name) .
+            'From: ' . Mail::B64Header(App::blog()->name()) .
             '<no-reply@' . str_replace('http://', '', Http::getHost()) . ' >',
             'Content-Type: text/HTML; charset=UTF-8;' .
             'X-Originating-IP: ' . Http::realIP(),
             'X-Mailer: ' . My::X_MAILER,
-            'X-Blog-Id: ' . Mail::B64Header(dcCore::app()->blog->id),
-            'X-Blog-Name: ' . Mail::B64Header(dcCore::app()->blog->name),
-            'X-Blog-Url: ' . Mail::B64Header(dcCore::app()->blog->url),
+            'X-Blog-Id: ' . Mail::B64Header(App::blog()->id()),
+            'X-Blog-Name: ' . Mail::B64Header(App::blog()->name()),
+            'X-Blog-Url: ' . Mail::B64Header(App::blog()->url()),
         ];
     }
 }

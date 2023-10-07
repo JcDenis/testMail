@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\testMail;
 
-use dcCore;
+use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
 /**
@@ -27,6 +27,6 @@ class My extends MyPlugin
 
     public static function checkXustomContext(int $context): ?bool
     {
-        return defined('DC_CONTEXT_ADMIN') && dcCore::app()->auth->isSuperAdmin();
+        return defined('DC_CONTEXT_ADMIN') && App::auth()->isSuperAdmin();
     }
 }

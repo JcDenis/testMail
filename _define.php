@@ -20,9 +20,9 @@ $this->registerModule(
     'Mail test',
     'Send a simple mail from admin',
     'Osku and contributors',
-    '0.5',
+    '0.6',
     [
-        'requires'    => [['core', '2.27']],
+        'requires'    => [['core', '2.28']],
         'permissions' => null,
         'type'        => 'plugin',
         'support'     => 'https://git.dotclear.watch/JcDenis/' . basename(__DIR__) . '/issues',
