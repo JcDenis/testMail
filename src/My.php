@@ -1,15 +1,5 @@
 <?php
-/**
- * @brief testMail, a plugin for Dotclear 2
- *
- * @package Dotclear
- * @subpackage Plugin
- *
- * @author Osku and contributors
- *
- * @copyright Jean-Christian Denis
- * @copyright GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
- */
+
 declare(strict_types=1);
 
 namespace Dotclear\Plugin\testMail;
@@ -18,15 +8,20 @@ use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
 /**
- * This module definitions.
+ * @brief   testMail My helper.
+ * @ingroup testMail
+ *
+ * @author      Osku (author)
+ * @author      Jean-Christian Denis (author)
+ * @copyright   GPL-2.0 https://www.gnu.org/licenses/gpl-2.0.html
  */
 class My extends MyPlugin
 {
     /** @var    string  Mailer name */
     public const X_MAILER = 'Dotclear';
 
-    public static function checkXustomContext(int $context): ?bool
+    public static function checkCustomContext(int $context): ?bool
     {
-        return defined('DC_CONTEXT_ADMIN') && App::auth()->isSuperAdmin();
+        return App::task()->checkContext('BACKEND') && App::auth()->isSuperAdmin();
     }
 }
