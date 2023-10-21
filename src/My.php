@@ -8,8 +8,8 @@ use Dotclear\App;
 use Dotclear\Module\MyPlugin;
 
 /**
- * @brief   testMail My helper.
- * @ingroup testMail
+ * @brief       testMail My helper.
+ * @ingroup     testMail
  *
  * @author      Osku (author)
  * @author      Jean-Christian Denis (author)
@@ -17,11 +17,19 @@ use Dotclear\Module\MyPlugin;
  */
 class My extends MyPlugin
 {
-    /** @var    string  Mailer name */
+    /**
+     * Mailer name.
+     *
+     * @var     string  X_MAILER
+     */
     public const X_MAILER = 'Dotclear';
 
     public static function checkCustomContext(int $context): ?bool
     {
-        return App::task()->checkContext('BACKEND') && App::auth()->isSuperAdmin();
+        // Limit to super admin
+        return match ($context) {
+            self::MODULE => App::auth()->isSuperAdmin(),
+            default      => null,
+        };
     }
 }

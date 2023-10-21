@@ -26,8 +26,8 @@ use Dotclear\Helper\Text;
 use Exception;
 
 /**
- * @brief   testMail manage class.
- * @ingroup testMail
+ * @brief       testMail manage class.
+ * @ingroup     testMail
  *
  * @author      Osku (author)
  * @author      Jean-Christian Denis (author)
