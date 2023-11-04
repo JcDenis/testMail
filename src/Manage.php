@@ -108,7 +108,7 @@ class Manage extends Process
                                 (new Input('mail_to'))
                                     ->__call('class', ['maximal'])
                                     ->__call('size', [30])
-                                    ->__call('maxlenght', [255])
+                                    ->__call('maxlength', [255])
                                     ->__call('value', ['']),
                             ]]),
                         (new Para())
@@ -118,7 +118,7 @@ class Manage extends Process
                                 (new Input('mail_subject'))
                                     ->__call('class', ['maximal'])
                                     ->__call('size', [30])
-                                    ->__call('maxlenght', [255])
+                                    ->__call('maxlength', [255])
                                     ->__call('value', ['']),
                             ]]),
                         (new Para())
@@ -152,6 +152,9 @@ class Manage extends Process
         Page::closeModule();
     }
 
+    /**
+     * @return  array<int, string>
+     */
     private static function getHeaders(): array
     {
         return [
