@@ -1,10 +1,10 @@
 # README
 
-[![Release](https://img.shields.io/badge/release-0.7.1-a2cbe9.svg)](https://git.dotclear.watch/JcDenis/testMail/releases)
+[![Release](https://img.shields.io/badge/release-0.7.1-a2cbe9.svg)](https://github.com/JcDenis/testMail/releases)
 ![Date](https://img.shields.io/badge/date-2023.11.04-c44d58.svg)
 [![Dotclear](https://img.shields.io/badge/dotclear-v2.28-137bbb.svg)](https://fr.dotclear.org/download)
 [![Dotaddict](https://img.shields.io/badge/dotaddict-official-9ac123.svg)](https://plugins.dotaddict.org/dc2/details/testMail)
-[![License](https://img.shields.io/badge/license-GPL--2.0-ececec.svg)](https://git.dotclear.watch/JcDenis/testMail/src/branch/master/LICENSE)
+[![License](https://img.shields.io/badge/license-GPL--2.0-ececec.svg)](https://github.com/JcDenis/testMail/src/branch/master/LICENSE)
 
 ## ABOUT
 
@@ -27,10 +27,10 @@ Access mail form from admin sidebar system menu **Mail test**.
 
 ## LINKS
 
-* [License](https://git.dotclear.watch/JcDenis/testMail/src/branch/master/LICENSE)
-* [Packages & details](https://git.dotclear.watch/JcDenis/testMail/releases) (or on [Dotaddict](https://plugins.dotaddict.org/dc2/details/testMail))
-* [Sources & contributions](https://git.dotclear.watch/JcDenis/testMail) (or on [GitHub](https://github.com/JcDenis/testMail))
-* [Issues & security](https://git.dotclear.watch/JcDenis/testMail/issues) (or on [GitHub](https://github.com/JcDenis/testMail/issues))
+* [License](https://github.com/JcDenis/testMail/src/branch/master/LICENSE)
+* [Packages & details](https://github.com/JcDenis/testMail/releases) (or on [Dotaddict](https://plugins.dotaddict.org/dc2/details/testMail))
+* [Sources & contributions](https://github.com/JcDenis/testMail)
+* [Issues & security](https://github.com/JcDenis/testMail/issues)
 
 ## CONTRIBUTORS
 
