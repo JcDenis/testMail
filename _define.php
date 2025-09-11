@@ -18,9 +18,9 @@ $this->registerModule(
     'Mail test',
     'Send a simple mail from admin',
     'Osku and contributors',
-    '0.7.2',
+    '0.8',
     [
-        'requires'    => [['core', '2.28']],
+        'requires'    => [['core', '2.36']],
         'permissions' => 'My',
         'type'        => 'plugin',
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
