@@ -45,9 +45,9 @@ class Manage
         }
 
         $active_headers = !empty($_POST['active_headers']);
-        $mail_to        = $_POST['mail_to']      ?? '';
-        $mail_subject   = $_POST['mail_subject'] ?? '';
-        $mail_content   = $_POST['mail_content'] ?? '';
+        $mail_to        = is_string($_POST['mail_to'] ?? null) ? trim($_POST['mail_to']) : '';
+        $mail_subject   = is_string($_POST['mail_subject'] ?? null) ? $_POST['mail_subject'] : '';
+        $mail_content   = is_string($_POST['mail_content'] ?? null) ? $_POST['mail_content'] : '';
 
         if (!empty($mail_content) || !empty($mail_to)) {
             try {
@@ -94,57 +94,57 @@ class Manage
         Notices::getNotices() .
 
         (new Div('mail_testor'))
-            ->__call('items', [[
+            ->items([
                 (new Form('mail_form'))
-                    ->__call('method', ['post'])
-                    ->__call('action', [My::manageUrl()])
-                    ->__call('fields', [[
+                    ->method('post')
+                    ->action(My::manageUrl())
+                    ->fields([
                         (new Para())
-                            ->__call('items', [[
+                            ->items([
                                 (new Label(__('Mailto:')))
-                                    ->__call('for', ['mail_to']),
+                                    ->for('mail_to'),
                                 (new Input('mail_to'))
-                                    ->__call('class', ['maximal'])
-                                    ->__call('size', [30])
-                                    ->__call('maxlength', [255])
-                                    ->__call('value', ['']),
-                            ]]),
+                                    ->class('maximal')
+                                    ->size(30)
+                                    ->maxlength(255)
+                                    ->value(''),
+                            ]),
                         (new Para())
-                            ->__call('items', [[
+                            ->items([
                                 (new Label(__('Subject:')))
-                                    ->__call('for', ['mail_subject']),
+                                    ->for('mail_subject'),
                                 (new Input('mail_subject'))
-                                    ->__call('class', ['maximal'])
-                                    ->__call('size', [30])
-                                    ->__call('maxlength', [255])
-                                    ->__call('value', ['']),
-                            ]]),
+                                    ->class('maximal')
+                                    ->size(30)
+                                    ->maxlength(255)
+                                    ->value(''),
+                            ]),
                         (new Para())
-                            ->__call('items', [[
+                            ->items([
                                 (new Label(__('Content:')))
-                                    ->__call('for', ['mail_content']),
+                                    ->for('mail_content'),
                                 (new Textarea('mail_content', ''))
-                                    ->__call('class', ['maximal'])
-                                    ->__call('cols', [50])
-                                    ->__call('rows', [7]),
-                            ]]),
+                                    ->class('maximal')
+                                    ->cols(50)
+                                    ->rows(7),
+                            ]),
                         (new Para())
-                            ->__call('items', [[
+                            ->items([
                                 (new Checkbox('active_headers', false))
-                                    ->__call('value', [1]),
+                                    ->value(1),
                                 (new Label(__('Active mail headers'), Label::OUTSIDE_LABEL_AFTER))
-                                    ->__call('for', ['active_headers'])
-                                    ->__call('class', ['classic']),
-                            ]]),
+                                    ->for('active_headers')
+                                    ->class('classic'),
+                            ]),
                         (new Para())
-                            ->__call('items', [[
+                            ->items([
                                 (new Submit('save'))
-                                    ->__call('accesskey', ['s'])
-                                    ->__call('value', [__('Send')]),
+                                    ->accesskey('s')
+                                    ->value(__('Send')),
                                 ... My::hiddenFields(),
-                            ]]),
-                    ]]),
-            ]])
+                            ]),
+                    ]),
+            ])
             ->render();
 
         Page::closeModule();
@@ -157,8 +157,8 @@ class Manage
     {
         return [
             'From: ' . Mail::B64Header(App::blog()->name()) .
-            '<no-reply@' . str_replace('http://', '', Http::getHost()) . ' >',
-            'Content-Type: text/HTML; charset=UTF-8;' .
+            ' <no-reply@' . str_replace(['http://', 'https://'], '', Http::getHost()) . '>',
+            'Content-Type: text/html; charset=UTF-8;',
             'X-Originating-IP: ' . Http::realIP(),
             'X-Mailer: ' . My::X_MAILER,
             'X-Blog-Id: ' . Mail::B64Header(App::blog()->id()),
