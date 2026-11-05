@@ -2,8 +2,8 @@
 
 [![Release](https://img.shields.io/github/v/release/jcdenis/testMail?color=lightblue)](https://github.com/JcDenis/testMail/releases)
 ![Date](https://img.shields.io/github/release-date/jcdenis/testMail?color=red)
-[![Dotclear](https://img.shields.io/badge/dotclear-v2.39-137bbb.svg)](https://fr.dotclear.org/download)
-[![Dotaddict](https://img.shields.io/badge/dotaddict-official-9ac123.svg)](https://plugins.dotaddict.org/dc2/details/testMail)
+[![Dotclear](https://img.shields.io/badge/dotclear-v2.36-137bbb.svg)](https://fr.dotclear.org/download)
+[![Repository](https://img.shields.io/badge/repository-official-9ac123.svg)](https://dotclear.org/plugin/detail/testMail)
 [![License](https://img.shields.io/github/license/jcdenis/testMail?color=white)](https://github.com/JcDenis/testMail/blob/master/LICENSE)
 
 ## ABOUT
@@ -21,14 +21,14 @@ _testMail_ is a plugin for the open-source web publishing software called [Dotcl
 ## USAGE
 
 First install **testMail**, manualy from a zip package or from 
-Dotaddict repository. (See Dotclear's documentation to know how do this)
+Dotclear plugins repository. (See Dotclear's documentation to know how do this)
 
 Access mail form from admin sidebar system menu **Mail test**.
 
 ## LINKS
 
 * [License](https://github.com/JcDenis/testMail/blob/master/LICENSE)
-* [Packages & details](https://github.com/JcDenis/testMail/releases) (or on [Dotaddict](https://plugins.dotaddict.org/dc2/details/testMail))
+* [Packages & details](https://github.com/JcDenis/testMail/releases) (or on [Repository](https://dotclear.org/plugin/detail/testMail))
 * [Sources & contributions](https://github.com/JcDenis/testMail)
 * [Issues & security](https://github.com/JcDenis/testMail/issues)
 
