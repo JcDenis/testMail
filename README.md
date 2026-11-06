@@ -36,5 +36,6 @@ Access mail form from admin sidebar system menu **Mail test**.
 
 * Osku (author)
 * Jean-Christian Denis (latest)
+* Claude (AI assistant by Anthropic)
 
 You are welcome to contribute to this code.
