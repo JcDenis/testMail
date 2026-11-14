@@ -12,6 +12,8 @@ _testMail_ is a plugin for the open-source web publishing software called [Dotcl
 
 > Help dev to test dotclear mail system.
 
+A [user guide in French](https://github.com/JcDenis/testMail/blob/master/docs/fr/utilisation.md) is available.
+
 ## REQUIREMENTS
 
 * Dotclear 2.39
@@ -27,6 +29,7 @@ Access mail form from admin sidebar system menu **Mail test**.
 
 ## LINKS
 
+* [User guide (in French)](https://github.com/JcDenis/testMail/blob/master/docs/fr/utilisation.md)
 * [License](https://github.com/JcDenis/testMail/blob/master/LICENSE)
 * [Packages & details](https://github.com/JcDenis/testMail/releases) (or on [Repository](https://dotclear.org/plugin/detail/testMail))
 * [Sources & contributions](https://github.com/JcDenis/testMail)
