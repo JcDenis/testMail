@@ -1,3 +1,11 @@
+testMail 0.10 - 2026.11.15
+===========================================================
+* Fix DA URLs
+* Add Claude to contributors
+* [fix] Keep form values after an error, fix success message
+* [docs] Add a user guide in French, with screenshots
+* [docs] Add the admin help in English and French
+
 testMail 0.9 - 2026.11.05
 ===========================================================
 * Bump Dotclear from 2.36 to 2.39
