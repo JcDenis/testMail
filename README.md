@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/v/release/jcdenis/testMail?color=lightblue)](https://github.com/JcDenis/testMail/releases)
 ![Date](https://img.shields.io/github/release-date/jcdenis/testMail?color=red)
-[![Dotclear](https://img.shields.io/badge/dotclear-v2.36-137bbb.svg)](https://fr.dotclear.org/download)
+[![Dotclear](https://img.shields.io/badge/dotclear-v2.39-137bbb.svg)](https://fr.dotclear.org/download)
 [![Repository](https://img.shields.io/badge/repository-official-9ac123.svg)](https://dotclear.org/plugin/detail/testMail)
 [![License](https://img.shields.io/github/license/jcdenis/testMail?color=white)](https://github.com/JcDenis/testMail/blob/master/LICENSE)
 
