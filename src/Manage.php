@@ -148,6 +148,7 @@ class Manage
             ])
             ->render();
 
+        Page::helpBlock(My::id() . '-index');
         Page::closeModule();
     }
 
