@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dotclear\Plugin\testMail;
 
 use Dotclear\App;
+use Dotclear\Helper\Html\Html;
 use Dotclear\Core\Backend\Notices;
 use Dotclear\Core\Backend\Page;
 use Dotclear\Helper\Process\TraitProcess;
@@ -66,7 +67,7 @@ class Manage
                 } else {
                     Mail::sendMail($mail_to, $mail_subject, $mail_content);
                 }
-                Notices::addSuccessNotice(__('Mail successuffly sent.'));
+                Notices::addSuccessNotice(__('Mail successfully sent.'));
                 My::redirect();
 
                 return true;
@@ -107,7 +108,7 @@ class Manage
                                     ->class('maximal')
                                     ->size(30)
                                     ->maxlength(255)
-                                    ->value(''),
+                                    ->value(Html::escapeHTML(self::post('mail_to'))),
                             ]),
                         (new Para())
                             ->items([
@@ -117,20 +118,20 @@ class Manage
                                     ->class('maximal')
                                     ->size(30)
                                     ->maxlength(255)
-                                    ->value(''),
+                                    ->value(Html::escapeHTML(self::post('mail_subject'))),
                             ]),
                         (new Para())
                             ->items([
                                 (new Label(__('Content:')))
                                     ->for('mail_content'),
-                                (new Textarea('mail_content', ''))
+                                (new Textarea('mail_content', Html::escapeHTML(self::post('mail_content'))))
                                     ->class('maximal')
                                     ->cols(50)
                                     ->rows(7),
                             ]),
                         (new Para())
                             ->items([
-                                (new Checkbox('active_headers', false))
+                                (new Checkbox('active_headers', !empty($_POST['active_headers'])))
                                     ->value(1),
                                 (new Label(__('Active mail headers'), Label::OUTSIDE_LABEL_AFTER))
                                     ->for('active_headers')
@@ -165,5 +166,13 @@ class Manage
             'X-Blog-Name: ' . Mail::B64Header(App::blog()->name()),
             'X-Blog-Url: ' . Mail::B64Header(App::blog()->url()),
         ];
+    }
+
+    /**
+     * Get posted value, to keep form values after an error.
+     */
+    private static function post(string $key): string
+    {
+        return is_string($_POST[$key] ?? null) ? $_POST[$key] : '';
     }
 }

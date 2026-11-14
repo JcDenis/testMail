@@ -10,11 +10,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "You must provide a valid email address."
+msgstr "Vous devez fournir une adresse e-mail valide."
+
 msgid "You must provide a content."
 msgstr "Vous devez fournir un contenu."
 
-msgid "Mail successuffly sent."
-msgstr "Mail envoyer avec succès."
+msgid "Mail successfully sent."
+msgstr "Mail envoyé avec succès."
 
 msgid "Mailto:"
 msgstr "Envoyer à :"
