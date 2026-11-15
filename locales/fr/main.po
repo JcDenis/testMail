@@ -11,7 +11,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "You must provide a valid email address."
-msgstr "Vous devez fournir une adresse e-mail valide."
+msgstr "Vous devez indiquer une adresse e-mail valide."
 
 msgid "You must provide a content."
 msgstr "Vous devez fournir un contenu."

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 use Dotclear\Helper\L10n;
 
-L10n::$locales['You must provide a valid email address.'] = 'Vous devez fournir une adresse e-mail valide.';
+L10n::$locales['You must provide a valid email address.'] = 'Vous devez indiquer une adresse e-mail valide.';
 L10n::$locales['You must provide a content.'] = 'Vous devez fournir un contenu.';
 L10n::$locales['Mail successfully sent.'] = 'Mail envoyé avec succès.';
 L10n::$locales['Mailto:'] = 'Envoyer à :';
