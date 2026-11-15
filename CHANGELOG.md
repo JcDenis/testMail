@@ -1,3 +1,7 @@
+testMail 0.10.1 - 2026.11.15
+===========================================================
+* [lang] Do not override core translations
+
 testMail 0.10 - 2026.11.15
 ===========================================================
 * [fix] Keep form values after an error, fix success message
